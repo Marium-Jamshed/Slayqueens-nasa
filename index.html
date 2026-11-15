@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Outpost Commander: a NASA Space Apps Challenge mission trainer. Run a Moon or Mars outpost and balance power, air, food and radiation shielding.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Outpost Commander | Junior Astronaut Mission Trainer</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%232563eb'/%3E%3Ccircle cx='50' cy='50' r='20' fill='%235ad7ff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<main>
+<nav class="top" aria-label="Menu">
+  <button id="howb" class="ghost">How to play</button>
+  <button id="thm" class="ghost">Theme: Dark</button>
+  <button id="snd" class="ghost" aria-pressed="false">Sound off</button>
+</nav>
+
+<section id="menu" class="menu">
+  <div class="logo">OUTPOST<span>COMMANDER</span></div>
+  <p class="sub">Junior Astronaut Mission Trainer<br>NASA Space Apps Challenge 03</p>
+  <div class="row">
+    <button class="site pick" data-site="moon" aria-pressed="true"><i class="planet moon"></i><b>Moon</b><small>Lunar night. Fast radio.</small></button>
+    <button class="site pick" data-site="mars" aria-pressed="false"><i class="planet mars"></i><b>Mars</b><small>Weak sunlight. Slow radio.</small></button>
+  </div>
+  <div class="seg" role="group" aria-label="Difficulty"><button class="lvl" data-lvl="easy" aria-pressed="true">Cadet</button><button class="lvl" data-lvl="hard" aria-pressed="false">Commander</button></div>
+  <div class="row"><input id="cs" type="text" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Callsign" aria-label="Callsign"></div>
+  <button id="start" class="go">Launch mission</button>
+  <p id="best" class="note"></p>
+  <p class="note links"><a href="https://ccmc.gsfc.nasa.gov/tools/DONKI/" target="_blank" rel="noopener noreferrer">NASA DONKI</a><a href="https://www.nasa.gov/humans-in-space/artemis/" target="_blank" rel="noopener noreferrer">Artemis</a><a href="https://science.nasa.gov/mars/" target="_blank" rel="noopener noreferrer">Mars</a><a href="https://www.nasa.gov/learning-resources/" target="_blank" rel="noopener noreferrer">NASA STEM</a></p>
+</section>
+
+<section id="cine" class="cine" hidden>
+  <canvas id="cv" width="900" height="460" role="img" aria-label="Rocket animation"></canvas>
+  <p id="cap" class="cap"></p>
+  <button id="skip" class="ghost skip">Skip</button>
+</section>
+
+<section id="game" hidden>
+  <div class="hud">
+    <b id="where"></b><span id="day"></span><span id="sunl"></span><span id="delay"></span>
+    <button id="quit" class="ghost">Quit</button>
+    <div class="bar prog"><i id="progf"></i></div>
+    <span id="chap" class="chap"></span>
+  </div>
+  <div class="stage">
+    <canvas id="world" width="900" height="300" role="img" aria-label="Animated view of your outpost"></canvas>
+    <div id="flashov"></div><div id="floats"></div><div id="alert" role="alert" hidden></div>
+  </div>
+  <div class="gauges" id="gauges"></div>
+  <div class="panel">
+    <div class="hrs"><span>Crew hours</span><div id="segs"></div><b id="hl"></b></div>
+    <div id="sliders"></div>
+    <p class="note">Blue is healthy. Red is risky. Use all 8 hours, then end the day.</p>
+  </div>
+  <div id="mc" class="mc"></div>
+  <button id="end" class="go wide">End day</button>
+  <p id="fact" class="note center"></p>
+</section>
+
+<section id="over" class="panel center" hidden>
+  <div id="oe" class="oi"></div><h2 id="ot"></h2><p id="ol" class="dim"></p>
+  <div id="os" class="score"></div><div id="ostars" class="stars"></div>
+  <h3>Mission report</h3>
+  <canvas id="chart" width="640" height="200" role="img" aria-label="Chart of power, air, food, shield and radiation over the mission"></canvas>
+  <p id="leg" class="note"></p>
+  <div id="od" class="row"></div>
+  <button id="again" class="go">Play again</button>
+</section>
+</main>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true" hidden><div id="mbody" class="panel center"></div></div>
+
+<div id="help" class="modal top2" role="dialog" aria-modal="true" aria-labelledby="helpt" hidden><div class="panel">
+  <h2 id="helpt" class="center">How to play</h2>
+  <ol class="how">
+    <li><b>Pick a base.</b> Moon or Mars. Then launch.</li>
+    <li><b>Split 8 crew hours.</b> Drag the sliders for Power, Air, Food, Shield and Science.</li>
+    <li><b>Watch the rings.</b> Blue is healthy. Red is danger.</li>
+    <li><b>Press End day.</b> Your plan changes the base.</li>
+    <li><b>Make story choices.</b> Your crew will ask you to decide. Every choice has a cost.</li>
+    <li><b>Survive 15 days.</b> Science earns points. The mission ends early if Power, Air or Food hits zero, or Radiation hits 100.</li>
+  </ol>
+  <p class="note center">Keys: 1 to 5 add an hour. Shift + 1 to 5 remove one. E ends the day.</p>
+  <div class="center"><button id="helpx" class="go">Got it</button></div>
+</div></div>
+<script src="app.js"></script>
+</body>
+</html>
